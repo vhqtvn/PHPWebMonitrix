@@ -72,6 +72,7 @@ try {
             if (empty($args)) {
                 throw new \InvalidArgumentException("Job name is required");
             }
+            putenv('VH_MONITOR_JOB_MODE=test');
             $cmd = new CommandRunner();
             $cmd->invokeJob($args[0], true); // Synchronous for testing
             break;
@@ -99,4 +100,4 @@ try {
     ]);
     echo "Error: " . $e->getMessage() . "\n";
     exit(1);
-} 
+}

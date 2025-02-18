@@ -67,9 +67,10 @@ class JobRunner
 
     public static function invoke(string $jobClass, bool $disableLogging = false): void
     {
+        $testMode = getenv('VH_MONITOR_JOB_MODE') === 'test';
         try {
             /** @var BaseJob $job */
-            $job = new $jobClass();
+            $job = new $jobClass($testMode);
             if ($disableLogging) {
                 $job->disableLogging();
             }

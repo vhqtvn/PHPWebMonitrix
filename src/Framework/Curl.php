@@ -70,6 +70,20 @@ class Curl
         return $this->lastResponse;
     }
 
+    public function json($as_array = true)
+    {
+        $result = json_decode($this->lastResponse, $as_array);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new CurlException(
+                "Invalid JSON response, error: " . json_last_error_msg(),
+                $this->getLastInfo()['url'] ?? '',
+                $this->lastResponse,
+                $this->getLastInfo()['http_code'] ?? 0
+            );
+        }
+        return $result;
+    }
+
     private function throwLastError()
     {
         $info = $this->getLastInfo();
